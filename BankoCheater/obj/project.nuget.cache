@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "bZi0goKPAe0sBXJFveRG0TY+bif79X7RWmRzkMxo741926vTM6WvBxwGA9nC70HcRpezjP8BUmSEQKT7cXQjzw==",
+  "dgSpecHash": "p/vA9aaKFQaIVgZYBG8pmobwehhTPrQQFwOX99QJmNIzTHSu4lJ2UlyJUNCm/eDKrgr/bh8lS0HPRq6sKlQbQw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MAGS\\Documents\\GitHub\\BankoCheater\\BankoCheater.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\blsto\\source\\repos\\OPGCoding\\banko-snyd-OPGCoding\\BankoCheater\\BankoCheater.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\blsto\\.nuget\\packages\\htmlagilitypack\\1.11.59\\htmlagilitypack.1.11.59.nupkg.sha512",
+    "C:\\Users\\blsto\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\blsto\\.nuget\\packages\\selenium.chrome.webdriver\\85.0.0\\selenium.chrome.webdriver.85.0.0.nupkg.sha512",
+    "C:\\Users\\blsto\\.nuget\\packages\\selenium.webdriver\\4.18.1\\selenium.webdriver.4.18.1.nupkg.sha512",
+    "C:\\Users\\blsto\\.nuget\\packages\\selenium.webdriver.chromedriver\\122.0.6261.6901\\selenium.webdriver.chromedriver.122.0.6261.6901.nupkg.sha512"
+  ],
   "logs": []
 }

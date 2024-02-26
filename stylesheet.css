@@ -1,0 +1,75 @@
+body {
+  margin: 0px;
+}
+table {
+  border-color: navy;
+  border-width: medium;
+  border-style: solid;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+h1 {
+  text-align: center;
+  color: #003366;
+  font-size: 5vw;
+}
+h2 {
+  text-align: center;
+  width: 100%;
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  font-size: 5vw;
+}
+
+td {
+  border-width: medium;
+  width: 80px;
+  height: 80px;
+  border-color: #003366;
+  border-style: solid;
+  text-align: center;
+  background-color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+input {
+  outline: none;
+  width: 300px;
+  height: 40px;
+  font-size: 20px;
+}
+#knapper {
+  text-align: center;
+}
+#knap {
+  font-size: small;
+}
+tr {
+  padding: 30px;
+}
+p {
+  text-align: center;
+  font-size: 12vw;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+button {
+  height: 46px;
+  width: 100px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  background-color: #003366;
+  color: white;
+  cursor: pointer;
+  vertical-align: bottom;
+}
+
+img {
+  width: 400px;
+  display: block;
+  margin: auto;
+}

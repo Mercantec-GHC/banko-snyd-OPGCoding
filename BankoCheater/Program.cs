@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Newtonsoft.Json;
@@ -13,95 +14,133 @@ namespace BankoCheater
 			string url = "https://mags-template.github.io/Banko/";
 			string driverPath = @"C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\chromedriver.exe";
 
-			Console.Write("Hvad er dit navn? ");
-			string pladeNavn = Console.ReadLine();
+			Console.WriteLine("Hvad er dit navn? ");
+			string brugerNavn = Console.ReadLine();
 
-			Console.Write("Hvor mange plader ønsker du? ");
-			long pladeAntal = Convert.ToInt64(Console.ReadLine());
-
-			// Opretter en instans af ChromeDriver uden for løkken
-			IWebDriver banko = new ChromeDriver(driverPath);
-
-			// Åbner websiden hvor inputfeltet er placeret
-			banko.Navigate().GoToUrl(url);
+			Console.WriteLine("Hvor mange plader vil du bruge?");
+			int antalPlader = Convert.ToInt32(Console.ReadLine());
 
 			List<Plade> plader = new List<Plade>();
 
-			for (int i = 0; i < pladeAntal; i++)
+			using (IWebDriver webdriver = new ChromeDriver(driverPath))
 			{
-				// Find inputfeltet ved hjælp af dens id
-				IWebElement inputField = banko.FindElement(By.Id("tekstboks"));
+				webdriver.Navigate().GoToUrl(url);
 
-				// Indtast navn i inputfeltet
-				string name = pladeNavn + (i + 1); // Tilføj pladenummer til navnet
-				inputField.SendKeys(name);
-
-				// Find og klik på generér-knappen
-				IWebElement generateButton = banko.FindElement(By.Id("knap"));
-				generateButton.Click();
-
-				// Vent på, at pladen genereres
-				System.Threading.Thread.Sleep(0); // Vent i 1 sekund (juster efter behov)
-
-				// Find pladeelementerne ved hjælp af deres id
-				IWebElement pladeElement = banko.FindElement(By.Id("p11"));
-				IWebElement pladeElement2 = banko.FindElement(By.Id("p12"));
-				IWebElement pladeElement3 = banko.FindElement(By.Id("p13"));
-
-				// Udskriv bankoplade på hjemmesiden
-				Console.WriteLine("Bankoplade på hjemmesiden:");
-				Console.WriteLine(pladeElement.Text);
-				Console.WriteLine(pladeElement2.Text);
-				Console.WriteLine(pladeElement3.Text);
-
-				// Tilføj pladen til listen
-				Plade plade = new Plade
+				for (int i = 0; i < antalPlader; i++)
 				{
-					Navn = name,
-					Række1 = pladeElement.Text,
-					Række2 = pladeElement2.Text,
-					Række3 = pladeElement3.Text
-				};
-				plader.Add(plade);
+					IWebElement inputField = webdriver.FindElement(By.Id("tekstboks"));
+					inputField.SendKeys(brugerNavn + i);
 
-				inputField.Clear();
+					IWebElement generateButton = webdriver.FindElement(By.Id("knap"));
+					generateButton.Click();
+
+					System.Threading.Thread.Sleep(0); // Vent til pladen er genereret
+
+					Plade plade = new Plade
+					{
+						Navn = $"{brugerNavn}{i}",
+						Række1 = ParseToIntList(webdriver.FindElement(By.Id("p11")).Text),
+						Række2 = ParseToIntList(webdriver.FindElement(By.Id("p12")).Text),
+						Række3 = ParseToIntList(webdriver.FindElement(By.Id("p13")).Text),
+						BingoStatus = new bool[3]
+					};
+
+					plader.Add(plade);
+
+					inputField.Clear();
+				}
+
+				GemPlader(plader);
 			}
 
-			// Gem pladerne i en JSON-fil
-			GemPlader(plader);
+			søgITal(plader);
+		}
 
-			// Luk browseren uden for løkken, når du er færdig med at bruge den
-			banko.Quit();
+		static List<int> ParseToIntList(string numbers)
+		{
+			return numbers.Split(' ')
+						  .Select(n => int.TryParse(n, out int result) ? result : 0)
+						  .Where(n => n != 0)
+						  .ToList();
 		}
 
 		static void GemPlader(List<Plade> plader)
 		{
 			string sti = @"C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\plader.json";
-
+			Console.Clear();
 			try
 			{
 				string json = JsonConvert.SerializeObject(plader, Formatting.Indented);
 				System.IO.File.WriteAllText(sti, json);
-				Console.WriteLine("Pladerne er gemt i plader.json filen.");
+				Console.WriteLine("Pladerne er gemt korrekt!");
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Fejl ved gemning af pladerne: {ex.Message}");
+				Console.WriteLine($"Fejl i forsøget på at gemme pladerne! {ex.Message}");
 			}
 		}
 
+		static void søgITal(List<Plade> plader)
+		{
+			Console.WriteLine("-------------------------------------------------------------------");
+			Console.WriteLine("Indtast de opråbte tal (eller skriv 'done' for at afslutte): ");
+			List<int> indtastedeTal = new List<int>();
+			string input;
 
-		
+			while ((input = Console.ReadLine()) != "done")
+			{
+				if (int.TryParse(input, out int tal))
+				{
+					indtastedeTal.Add(tal);
+					Console.WriteLine($"Tilføjede {tal}. Indtast næste tal eller skriv 'done' for at afslutte.");
 
+					foreach (var plade in plader)
+					{
+						UpdateBingoStatus(plade, indtastedeTal);
 
+						int bingoCount = plade.BingoStatus.Count(b => b);
+						if (bingoCount == 1)
+						{
+							Console.WriteLine($"\n\tBingo på ( 1 ) række! {plade.Navn} har bingo.\n");
+						}
+						else if (bingoCount == 2)
+						{
+							Console.WriteLine($"\n\tBingo på ( 2 ) rækker! {plade.Navn} har bingo på to rækker.\n");
+						}
+						else if (bingoCount == 3)
+						{
+							Console.WriteLine($"\n Bingo ( Fuld ) plade! {plade.Navn} har bingo på alle tre rækker.\n");
+							return; // Afslutter, når en fuld plade er opnået
+						}
+					}
+				}
+				else
+				{
+					Console.WriteLine("Ugyldigt input, prøv igen.");
+				}
+			}
+		}
 
+		static void UpdateBingoStatus(Plade plade, List<int> indtastedeTal)
+		{
+			List<List<int>> rækker = new List<List<int>> { plade.Række1, plade.Række2, plade.Række3 };
+
+			for (int i = 0; i < rækker.Count; i++)
+			{
+				if (!rækker[i].Except(indtastedeTal).Any() && !plade.BingoStatus[i])
+				{
+					plade.BingoStatus[i] = true; // Markerer rækken som havende bingo
+				}
+			}
+		}
 	}
 
 	class Plade
 	{
 		public string Navn { get; set; }
-		public string Række1 { get; set; }
-		public string Række2 { get; set; }
-		public string Række3 { get; set; }
+		public List<int> Række1 { get; set; }
+		public List<int> Række2 { get; set; }
+		public List<int> Række3 { get; set; }
+		public bool[] BingoStatus { get; set; } // Tilføjet for at holde styr på bingo-status for hver række
 	}
 }

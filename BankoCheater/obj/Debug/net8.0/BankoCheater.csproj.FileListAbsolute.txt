@@ -21,3 +21,4 @@ C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\obj\Debu
 C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\obj\Debug\net8.0\BankoCheater.pdb
 C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\obj\Debug\net8.0\BankoCheater.genruntimeconfig.cache
 C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\obj\Debug\net8.0\ref\BankoCheater.dll
+C:\Users\blsto\source\repos\OPGCoding\banko-snyd-OPGCoding\BankoCheater\bin\Debug\net8.0\SeleniumExtras.WaitHelpers.dll

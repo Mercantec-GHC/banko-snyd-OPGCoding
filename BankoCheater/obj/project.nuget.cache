@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "p/vA9aaKFQaIVgZYBG8pmobwehhTPrQQFwOX99QJmNIzTHSu4lJ2UlyJUNCm/eDKrgr/bh8lS0HPRq6sKlQbQw==",
+  "dgSpecHash": "VvmXwqtRELVPxTHvFo2L+6EUBZ5cAQEqf5n/SmH3AIMrI2yq3TA2RA8/m8K7PiHC1jKZA2w9PqWhMOV1g2dp3Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\blsto\\source\\repos\\OPGCoding\\banko-snyd-OPGCoding\\BankoCheater\\BankoCheater.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\blsto\\.nuget\\packages\\dotnetseleniumextras.waithelpers\\3.11.0\\dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
     "C:\\Users\\blsto\\.nuget\\packages\\htmlagilitypack\\1.11.59\\htmlagilitypack.1.11.59.nupkg.sha512",
     "C:\\Users\\blsto\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\blsto\\.nuget\\packages\\selenium.chrome.webdriver\\85.0.0\\selenium.chrome.webdriver.85.0.0.nupkg.sha512",
